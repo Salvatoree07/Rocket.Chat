@@ -111,7 +111,7 @@ export const useComposerBoxPopup = <T extends { _id: string; sort?: number }>(
 				return;
 			}
 			
-			// [in en] questa è la funzione che permette di aggiornare il filtro cioè il testo della text area ogni volta che viene selezionato un elemnto del pupup
+			// formattedParams formats command parameters by detecting '@' or '#' prefixes
 			const formattedParams = item.params?.startsWith('@') || item.params?.startsWith('#') ? item.params.slice(1)+': '+item.params.charAt(0): item.params+': ';
 			chat?.composer?.replaceText(
 				(option.prefix ?? option.trigger ?? '') + 
