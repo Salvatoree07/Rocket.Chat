@@ -113,13 +113,13 @@ export const useComposerBoxPopup = <T extends { _id: string; sort?: number }>(
 			// formattedParams formats command parameters by detecting '@' or '#' prefixes
 			const formattedParams =
 				item.params?.startsWith('@') || item.params?.startsWith('#')
-					? item.params.slice(1) + ': ' + item.params.charAt(0)
-					: item.params + ': ';
+					? `${item.params.slice(1)}: ${item.params.charAt(0)}`
+					: `${item.params}: `;
 			chat?.composer?.replaceText(
 				(option.prefix ?? option.trigger ?? '') +
 					option.getValue(item as T) +
 					(option.suffix ?? '') +
-					(option.trigger == '/' ? formattedParams : ''),
+					(option.trigger === '/' ? formattedParams : ''),
 				{
 					start: value.lastIndexOf(result[1] + result[2]),
 					end: chat?.composer?.selection.start,
