@@ -11,8 +11,7 @@ import type { ChatAPI } from '../ChatAPI';
 
 const parse = (msg: string): { command: string; params: string } | { command: SlashCommand; params: string } | undefined => {
 
-	// This regex matches strings starting with '/', captures the command name (non-whitespace), 
-	// skips optional spaces and a label before a colon, and finally captures the parameters after the colon.
+	// This regex matches strings starting with '/', captures the command name (non-whitespace) skips optional spaces and a label before a colon, and finally captures the parameters after the colon.
 	const match = msg.match(/^\/([^\s]*)\s*[^:]*:\s*(.*)$/);
 	if (!match) {
 		return undefined;
