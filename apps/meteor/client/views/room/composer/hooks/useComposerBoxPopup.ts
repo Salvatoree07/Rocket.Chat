@@ -92,11 +92,11 @@ export const useComposerBoxPopup = <T extends { _id: string; sort?: number }>(
 			return sortedItems.find((item) => item._id === focused?._id) ?? sortedItems[0];
 		});
 	}, [items, option, suspended]);
-	const select = useEffectEvent((item: IItem) => { 
+	const select = useEffectEvent((item: IItem) => {
 		if (!option) {
 			throw new Error('No popup is open');
 		}
-		
+
 		if (commandsRef.current?.select) {
 			commandsRef.current.select(item as T);
 		} else {
@@ -109,14 +109,22 @@ export const useComposerBoxPopup = <T extends { _id: string; sort?: number }>(
 			if (!result || !value) {
 				return;
 			}
-			
+
 			// formattedParams formats command parameters by detecting '@' or '#' prefixes
-			const formattedParams = item.params?.startsWith('@') || item.params?.startsWith('#') ? item.params.slice(1)+': '+item.params.charAt(0): item.params+': ';
-			chat?.composer?.replaceText((option.prefix ?? option.trigger ?? '') + option.getValue(item as T) + (option.suffix ?? '') + (option.trigger == '/' ? formattedParams : '' ),
-			{
-				start: value.lastIndexOf(result[1] + result[2]),
-				end: chat?.composer?.selection.start,
-			});
+			const formattedParams =
+				item.params?.startsWith('@') || item.params?.startsWith('#')
+					? item.params.slice(1) + ': ' + item.params.charAt(0)
+					: item.params + ': ';
+			chat?.composer?.replaceText(
+				(option.prefix ?? option.trigger ?? '') +
+					option.getValue(item as T) +
+					(option.suffix ?? '') +
+					(option.trigger == '/' ? formattedParams : ''),
+				{
+					start: value.lastIndexOf(result[1] + result[2]),
+					end: chat?.composer?.selection.start,
+				},
+			);
 		}
 		setOptionIndex(-1);
 		setFocused(undefined);
@@ -153,7 +161,7 @@ export const useComposerBoxPopup = <T extends { _id: string; sort?: number }>(
 				option.matchSelectorRegex ??
 				(option.triggerAnywhere ? new RegExp(`(?:^| |\n)(${option.trigger})([^\\s]*$)`) : new RegExp(`(?:^)(${option.trigger})([^\\s]*$)`));
 			const result = value.match(selector);
-			
+
 			setFilter(commandsRef.current?.getFilter?.() ?? (result ? result[2] : ''));
 		}
 		return option;
