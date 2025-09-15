@@ -92,7 +92,6 @@ export const useComposerBoxPopup = <T extends { _id: string; sort?: number }>(
 			return sortedItems.find((item) => item._id === focused?._id) ?? sortedItems[0];
 		});
 	}, [items, option, suspended]);
-	
 	const select = useEffectEvent((item: IItem) => { 
 		if (!option) {
 			throw new Error('No popup is open');
